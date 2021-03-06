@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package prog;
+
+message GetRequest{
+    int32 client_id = 1;
+    string key = 2;
+    uint64 transaction_id = 3;
+}
+
+message SetRequest{
+    int32 client_id = 1;
+    string key = 2;
+    string value = 3;
+    uint64 transaction_id = 4;
+}
+
+message BeginRequest{
+    int32 client_id = 1;
+}
+
+message CommitRequest{
+    int32 client_id = 1;
+    uint64 transaction_id = 2;
+}
+
+message RollbackRequest{
+    int32 client_id = 1;
+    uint64 transaction_id = 2;
+}
+
+message Response{
+    int32 client_id = 1;
+    uint64 transaction_id = 2;
+    string error = 3;
+    string value = 4;
+}
+
+message InitRequest{}
+
+message CloseRequest{
+    int32 client_id = 1;
+    uint64 transaction_id = 2;
+}
+
+message DelRequest {
+    int32 client_id = 1;
+    uint64 transaction_id = 2;
+    string key = 3;
+}
+
+message FlushRequest {}
+
+message FlushDirtyPageRequest {}
+
+message CheckPointRequest {}
+
+service ServiceMethods {
+ rpc Get(GetRequest) returns (Response) {}
+ rpc Get2(GetRequest) returns (Response) {}
+ rpc Set(SetRequest) returns (Response) {}
+ rpc Begin(BeginRequest) returns (Response) {}
+ rpc Commit(CommitRequest) returns (Response) {}
+ rpc Rollback(RollbackRequest) returns (Response) {}
+ rpc Init(InitRequest) returns (Response) {}
+ rpc Close(CloseRequest) returns (Response) {}
+ rpc Del(DelRequest) returns (Response) {}
+ rpc Flush(FlushRequest) returns (Response) {}
+ rpc FlushDirtyPage(FlushDirtyPageRequest) returns (Response) {}
+ rpc CheckPoint(CheckPointRequest) returns (Response) {}
+}
